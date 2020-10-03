@@ -67,7 +67,7 @@ class LinkedLst:
                 prev = prev.next
 
         return self.head.next
-    
+
     #Function to remove a group of node that are in a list in a linked list
     #Input: 1 -> 2 -> 3 -> 4 -> 10 -> 6 ,val = [1,2,3]
     #Output: 4 -> 10 -> 6 
@@ -91,6 +91,54 @@ class LinkedLst:
 
         return self.head.next
 
+    #Function to insert a node into the linked list: (Insertion into the tail)
+    #Input: 1 -> 2 -> 3 -> 4 -> 10 -> 6, target = 5
+    #Output: 1 -> 2 -> 3 -> 4 -> 10 -> 6 -> 5
+    #Time complexity: O(n) with n being the length of the linked list, we will always have to go through the end of the list to add the target elemenet into
+    def insertNode_LAST(self, target):
+        #Base case: if there is no target to pass element in, then just return the current linked list
+        if not target: 
+            return self.head.next
+
+        #create an instance of the Node object to pass in the target
+        target_node = Node(target)
+        #base case: if the list is empty, we will add the target value into the head. 
+        if self.head is None:
+             self.head = target_node
+        #intialize a dummy node to look at each element in the linked list
+        current = self.head
+        #loop throught the linked list and add the target value into the linked list. 
+        while current:
+            if current.next == None: 
+                current.next = target_node
+                target_node.next = None
+            current = current.next
+        return current
+
+    #Function to insert a node into a linked list: (Insertion into the head)
+    #Input: 1 -> 2 -> 3 -> 4 -> 10 -> 6, target = 5
+    #Output: 5 -> 1 -> 2 -> 3 -> 4 -> 10 -> 6
+    #Time complexity: O(1), this is a constant time operation since we only have to reference the head node and add element into it
+    def insertNode_HEAD(self, target):
+        #base case: if there is no target to insert
+        if not target: 
+            return self.head.next
+        target_node = Node(target)
+        #base case: if the linked list is empty, and the head node is Null
+        if self.head is None: 
+            self.head = target_node
+        
+        currentHead = self.head
+        self.head = target_node
+        self.head.next = currentHead
+        
+        return self.head.next
+
+            
+    #Funtion to insert a node into a linked list after a given value: 
+    def insertNode_GIVEN(self,target, position):
+        pass
+
 
 #Main function to creaete list node
 def main():
@@ -112,7 +160,6 @@ def main():
     third.next = forth
     forth.next = five
     five.next = six
-
     print("Created singly linked list is below: ")
     llist.printNode()
 
@@ -130,4 +177,27 @@ def main():
     nodes = [1,2,3]
     llist.removeGroupNode(nodes)
     llist.printNode()
+    print("Insert Node Into The End of The List...")
+    target = 6
+    target_NULL = None
+    target_12 = 12
+    
+    llist.insertNode_LAST(target)
+    llist.printNode()
+    llist.insertNode_LAST(target_NULL)
+    llist.printNode()
+    llist.insertNode_LAST(target_12)
+    llist.printNode()
+    print("Insert Node Into Head Of The List...")
+    headTarget = 7
+    emptyLL = LinkedLst()
+    emptyLL.head = None
+    emptyLL.insertNode_LAST(target)
+    emptyLL.printNode()
+    llist.insertNode_HEAD(headTarget)
+    emptyLL.insertNode_HEAD(headTarget)
+    llist.printNode()
+    emptyLL.printNode()
+    print("")
+
 main()
