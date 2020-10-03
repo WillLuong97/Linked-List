@@ -82,6 +82,47 @@ def getMidFromLinkedList(node):
     return slowPTR
 
 
+#Approach 2: convert the linked list into a 2d array 
+#Helper method to find the convert the linked list into a 2d array
+def convertToTree(head):
+    listOfNodes = []
+    current = head
+    while current:
+        listOfNodes.append(current.val)
+        current = current.next
+
+    return listOfNodes
+
+def sortedListToBST_OPTIMIZED(head):
+    #base case: 
+    if not head: 
+        return None
+    
+    #convert the linked list into a 2d array
+    nodesArray = convertToTree(head)
+
+    #Helper method to extract the middle elemet from the array and construct 
+    #binary tree based on the left or right side of the tree
+    def treeConversion(left,right):
+        #base case
+        if left > right: 
+            return None
+
+        midIndex = (right + left) // 2
+        #extract the middle value from the array
+        midVal = nodesArray[midIndex]
+        #assign the root node to the middle value
+        root = TreeNode(midVal)
+        # Base case for when there is only one element left in the array
+        if left == right:
+            return root
+        #recursion call to create a tree for the left and right subtree
+        root.left = treeConversion(left, midIndex - 1)
+        root.right = treeConversion(midIndex + 1, right)
+        return root
+    return treeConversion(0, len(nodesArray) - 1)
+
+
 #Main progoram to run execute and test the function
 def main():
     print("TESTING SORTED LINKED LIST TO BINARY TREE CONVERSION...")
