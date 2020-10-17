@@ -135,10 +135,47 @@ class LinkedLst:
         return self.head.next
 
             
-    #Funtion to insert a node into a linked list after a given value: 
-    def insertNode_GIVEN(self,target, position):
-        pass
+# #Funtion to insert a node into a linked list after a given value: 
+# def insertNode_GIVEN(self,target, position):
+#     pass
 
+#Function to return a deep copy of a single linked list
+#Deep copy definition: 
+'''
+Deep copy of a Linked List means we do not copy the references of the nodes of the original Linked List rather for each node in the original Linked List a new node is created.
+'''
+def copy_list_SINGLY(head):
+    #base case: if the linked list is empty, just return nothing
+    if not head: 
+        return head
+    
+    #Create a new node from the list node that was passed in
+    copiedNode = Node(head.value)
+
+    #set the newly created node to point to the next node that would be recursively created as a new node in the deep copy list
+    copiedNode.next = copy_list_SINGLY(head.next)
+    
+
+    return copiedNode
+
+
+#Function to return a deep copy of a doubly linked list: 
+#A 
+
+#function to print out element from a linked list
+def printNode_NEW(head):
+    #base case: the linked list is empty
+    if not head: 
+        return None
+    
+    temp = head
+    #list to store all the the node:
+    linkedList = []
+    while temp: 
+        linkedList.append(temp.value)
+        temp = temp.next
+
+    return linkedList
 
 #Main function to creaete list node
 def main():
@@ -199,5 +236,10 @@ def main():
     llist.printNode()
     emptyLL.printNode()
     print("")
-
+    print("Deep Copy a linked list: ")
+    print("Original linked list: ")
+    llist.printNode()
+    newList = copy_list_SINGLY(llist.head)
+    print("Deep copy version of the list: ")
+    print(printNode_NEW(newList))
 main()
