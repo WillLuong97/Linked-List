@@ -196,7 +196,7 @@ Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
 '''
 #Function to reorder a linked list: 
 #2 pointer approach: 
-def reorderList(head: ListNode) -> None: 
+def reorderList(head: Node) -> None: 
     #Pointer to access element in the linked list
     fastPtr = head
     slowPtr = head
@@ -225,12 +225,51 @@ def reorderList(head: ListNode) -> None:
         revPtr = tmp
         tmpHeadPoitner = tmpHeadPoitner.next
 
+#Problem 876. Middle of the linked list:
 
+#problem statement: 
+'''
+Given a non-empty, singly linked list with head node head, return a middle node of linked list.
 
-    
+If there are two middle nodes, return the second middle node.
 
+ 
 
+Example 1:
 
+Input: [1,2,3,4,5]
+Output: Node 3 from this list (Serialization: [3,4,5])
+The returned node has value 3.  (The judge's serialization of this node is [3,4,5]).
+Note that we returned a ListNode object ans, such that:
+ans.val = 3, ans.next.val = 4, ans.next.next.val = 5, and ans.next.next.next = NULL.
+Example 2:
+
+Input: [1,2,3,4,5,6]
+Output: Node 4 from this list (Serialization: [4,5,6])
+Since the list has two middle nodes with values 3 and 4, we return the second one.
+ 
+
+Note:
+
+The number of nodes in the given list will be between 1 and 100.
+'''
+#Solution function: 2 pointer approach
+#Time complexity: O(N/2) -> O(n) where n is the number of node in a linked list.  
+def middleNode(head: Node) -> Node:
+    #base case: the linked list is empty
+    if not head: 
+        return None
+
+    #create pointer to access the element
+    slowPtr = head
+    fastPtr = head
+
+    while fastPtr and fastPtr.next:
+        fastPtr = fastPtr.next.next
+        slowPtr = slowPtr.next
+        
+
+    return slowPtr
 
 #Main function to creaete list node
 def main():
@@ -297,4 +336,6 @@ def main():
     newList = copy_list_SINGLY(llist.head)
     print("Deep copy version of the list: ")
     print(printNode_NEW(newList))
+    print("Returning the middle element in the linked list: ")
+    print(middleNode(llist.head))
 main()
