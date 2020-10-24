@@ -271,6 +271,85 @@ def middleNode(head: Node) -> Node:
 
     return slowPtr
 
+#1290. Convert Binary Number in a Linked List to Integer
+#Problem statement: 
+
+'''
+1290. Convert Binary Number in a Linked List to Integer
+Easy
+
+675
+
+49
+
+Add to List
+
+Share
+Given head which is a reference node to a singly-linked list. The value of each node in the linked list is either 0 or 1. The linked list holds the binary representation of a number.
+
+Return the decimal value of the number in the linked list.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,0,1]
+Output: 5
+Explanation: (101) in base 2 = (5) in base 10
+Example 2:
+
+Input: head = [0]
+Output: 0
+Example 3:
+
+Input: head = [1]
+Output: 1
+Example 4:
+
+Input: head = [1,0,0,1,0,0,1,1,1,0,0,0,0,0,0]
+Output: 18880
+Example 5:
+
+Input: head = [0,0]
+Output: 0
+ 
+
+Constraints:
+
+The Linked List is not empty.
+Number of nodes will not exceed 30.
+Each node's value is either 0 or 1.
+'''
+def getDecimalValue(head: Node) -> int:
+    #result value: 
+    decimalValue = 0
+    #reverse the linked list
+    current = head
+    prev = None
+    
+    #loop through the linked list and reverse it
+    while current:
+        tmp = current.next
+        current.next = prev
+        prev = current
+        current = tmp
+    #ovewrting the linked list with its reversed function
+    head = prev
+    #loop through the reversed linked list and start converting to the decimal value
+    expo = 0
+    while head:
+        
+        decimalValue += head.value * (2 ** expo)
+        expo += 1
+        head = head.next
+    return decimalValue
+
+#Time complexity: O(n), where n is the number of node in the binary linked list. The reversing of the lineked list would cost O(n) and the calculation would also cost O(n).
+#In total: the time complexity would be O(n) + O(n) = O(n)
+#Space complexity: O(1), we modify the string in place, so no need for extra memory allocation
+
+
 #Main function to creaete list node
 def main():
     print("Linked List Implementation")
@@ -338,4 +417,14 @@ def main():
     print(printNode_NEW(newList))
     print("Returning the middle element in the linked list: ")
     print(middleNode(llist.head))
+    print("Converting binary number into decimal from linked list: ")
+    binaryList = LinkedLst()
+    binaryList.head = Node(1)
+    binaryList.head.next = Node(0)
+    binaryList.head.next.next = Node(1)
+    print("Binary Linked List found: ")
+    binaryList.printNode()
+    print(getDecimalValue(binaryList.head))
+    print("End of Program...")
+
 main()
