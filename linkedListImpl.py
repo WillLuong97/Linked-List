@@ -177,6 +177,61 @@ def printNode_NEW(head):
 
     return linkedList
 
+
+#143. Reorder List: 
+
+#Problem statement: 
+'''
+Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+Example 1:
+
+Given 1->2->3->4, reorder it to 1->4->2->3.
+Example 2:
+
+Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
+'''
+#Function to reorder a linked list: 
+#2 pointer approach: 
+def reorderList(head: ListNode) -> None: 
+    #Pointer to access element in the linked list
+    fastPtr = head
+    slowPtr = head
+
+    #get to the mid element
+    while fastPtr and fastPtr.next:
+        fastPtr = fastPtr.next.next
+        slowPtr = slowPtr.next
+
+    reverse = None
+    #reverse element from mid to the last list node element:
+    while slowPtr: 
+        curr = slowPtr
+        slowPtr = slowPtr.next
+        curr.next = reverse
+        reverse = curr
+    
+    #temporary head pointer to look at each list node element from the beginning
+    tmpHeadPoitner = head
+    revPtr = reverse
+
+    #Loop through the linked list from the beginning and mix the first half with the element from the second half
+    while tmpHeadPoitner:
+        tmp = tmpHeadPoitner.next
+        tmpHeadPoitner.next = revPtr
+        revPtr = tmp
+        tmpHeadPoitner = tmpHeadPoitner.next
+
+
+
+    
+
+
+
+
 #Main function to creaete list node
 def main():
     print("Linked List Implementation")
