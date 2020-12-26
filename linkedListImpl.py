@@ -159,8 +159,6 @@ def copy_list_SINGLY(head):
     return copiedNode
 
 
-#Function to return a deep copy of a doubly linked list: 
-#A 
 
 #function to print out element from a linked list
 def printNode_NEW(head):
@@ -350,6 +348,59 @@ def getDecimalValue(head: Node) -> int:
 #Space complexity: O(1), we modify the string in place, so no need for extra memory allocation
 
 
+#Leetcode 817. Linked List Components
+
+'''
+We are given head, the head node of a linked list containing unique integer values.
+
+We are also given the list G, a subset of the values in the linked list.
+
+Return the number of connected components in G, where two values are connected if they appear consecutively in the linked list.
+
+Example 1:
+
+Input: 
+head: 0->1->2->3
+G = [0, 1, 3]
+Output: 2
+Explanation: 
+0 and 1 are connected, so [0, 1] and [3] are the two connected components.
+Example 2:
+
+Input: 
+head: 0->1->2->3->4
+G = [0, 3, 1, 4]
+Output: 2
+Explanation: 
+0 and 1 are connected, 3 and 4 are connected, so [0, 1] and [3, 4] are the two connected components.
+Note:
+
+If N is the length of the linked list given by head, 1 <= N <= 10000.
+The value of each node in the linked list will be in the range [0, N - 1].
+1 <= G.length <= 10000.
+G is a subset of all values in the linked list.
+'''
+#The idea is to count the number of the connected component in a linked list by checking if the current node value is the tails of the connected component or not
+#Loop through the linked list and check for the connected compoenent can be found in the G array
+def numComponents(head, G):
+    #base case: 
+    if not head: 
+        return None
+    if len(G) == 0: 
+        return None
+
+    answer = 0
+    Gset = set(G)
+
+    current = head
+    while current: 
+        if current.value in Gset and (not current.next or current.next.value not in Gset): 
+            answer += 1
+        
+        current = current.next
+
+    return answer
+
 #Main function to creaete list node
 def main():
     print("Linked List Implementation")
@@ -425,6 +476,18 @@ def main():
     print("Binary Linked List found: ")
     binaryList.printNode()
     print(getDecimalValue(binaryList.head))
+    print("TESTING Linked List Components...")
+    G = [0, 1, 3]
+    linkedLst = LinkedLst()
+    second_node = Node(0)
+    third_node = Node(1)
+    forth_node = Node(2)
+    fifth_node = Node(3)
+    linkedLst.head = second_node
+    linkedLst.head.next = third_node
+    third.next = forth_node
+    forth.next = fifth_node
+    print(numComponents(linkedLst.head, G))
     print("End of Program...")
 
 main()
