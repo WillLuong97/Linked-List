@@ -77,10 +77,38 @@ class FrontMiddleBackQueue:
 			self.middle = self.middle.prev
 		
 		self.count += 1
-	
-	def pushMiddle(self, val):
-		pass
 
+	# Function to push element to the middle of the queue
+	def pushMiddle(self, val):
+		#base case: if the queue is empty, then we just push the value onto the queue
+		if self.count == 0:
+			self.addFirstElement(val)
+			return 
+		#else: start adding the element to the middle of the list: 
+		#case 1: one middle value
+		if self.count % 2 == 1:
+			#Creating a new list node to push it onto the queue 
+			new_node = ListNode(val, self.middle.prev, self.middle) 
+			#if the middle element has another element right before it, so have it pointed to
+			# the new node
+			if self.middle.prev: 
+				self.middle.prev.next = new_node
+			self.middle.prev = new_node
+			if self.count == 1: 
+				self.head = new_node
+			
+			self.count += 1
+			self.middle = new_node
+		#case 2: two middle value, we will push the value to the queue before the left most middle value
+		else:
+			new_node = ListNode(val, self.middle, self.middle.next)
+			if self.middle.next: 
+				self.middle.prev = new_node
+			#push the new value behind the current middle elemenet
+			self.middle.next = new_node
+			self.count += 1
+			self.middle  = new_node
+ 			
 	#pusing the element to the back of the queue
 	def pushBack(self, val):
 		#if the current queue is empty so just simply put the target value into the queue: 
@@ -125,8 +153,34 @@ class FrontMiddleBackQueue:
 	
 	#popping an element from the middle	
 	def popMiddle(self):
-		pass
+		#base case: 
+		# the queue is empty and nothing to pop 
+		if self.count == 0: 
+			return -1
+		#the queue only has 1 element to pop from
+		if self.count == 1: 
+			return self.popFinalElement()
+		
 
+		node = self.middle 
+
+		if self.middle.prev: 
+			self.middle.prev.next = self.middle.next
+		
+		self.middle.next = self.middle.prev
+
+		#the middle of the elemenet is also the first element in the list
+		if self.head == self.middle:
+			self.head = self.head.next
+		
+		if self.count % 2 == 0: 
+			self.middle = self.middle.next
+
+		else: 
+			self.middle = self.middle.prev
+ 
+		self.count -= 1
+		return node.val
 
 	#popping element from the back
 	def popBack(self):
